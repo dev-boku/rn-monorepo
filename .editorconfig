@@ -1,0 +1,9 @@
+root = true
+
+[*]
+charset = utf-8                    # 파일 인코딩을 UTF-8로 설정
+end_of_line = lf                   # 줄 끝 문자를 LF(Line Feed)로 설정
+insert_final_newline = true        # 파일 끝에 빈 줄 추가
+trim_trailing_whitespace = true    # 줄 끝의 공백 제거
+indent_style = space               # 들여쓰기 스타일을 스페이스로 설정
+indent_size = 2                    # 들여쓰기 크기를 2칸으로 설정

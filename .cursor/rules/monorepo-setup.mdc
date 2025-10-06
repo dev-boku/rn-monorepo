@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# pnpm Monorepo Setup
+
+## 프로젝트 구조
+- **Root**: pnpm workspace 기반 모노레포
+- **Workspace 설정**: [pnpm-workspace.yaml](mdc:pnpm-workspace.yaml) - `apps/*`, `packages/*`
+- **앱**: [apps/example/](mdc:apps/example) - React Native + Expo + TypeScript
+- **공유 패키지**: 
+  - [packages/eslint-config/](mdc:packages/eslint-config) - ESLint 설정 패키지
+  - [packages/typescript-config/](mdc:packages/typescript-config) - TypeScript 설정 패키지
+
+## Metro 설정
+[apps/example/metro.config.js](mdc:apps/example/metro.config.js)에서 모노레포 패키지 처리:
+
+- `monorepoPackages`: 워크스페이스 패키지 매핑 (현재 비어있음)
+- `watchFolders`: 감시할 디렉토리 지정
+- `extraNodeModules`: 심볼릭 링크 문제 해결
+
+## 현재 패키지들
+- **eslint-config**: 공통 ESLint 설정
+- **typescript-config**: 공통 TypeScript 설정
+
+## 관련 파일
+- [pnpm-workspace.yaml](mdc:pnpm-workspace.yaml) - 워크스페이스 정의
+- [apps/example/metro.config.js](mdc:apps/example/metro.config.js) - Metro 설정
+- [packages/eslint-config/package.json](mdc:packages/eslint-config/package.json) - ESLint 설정
+- [packages/typescript-config/package.json](mdc:packages/typescript-config/package.json) - TypeScript 설정

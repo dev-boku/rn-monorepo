@@ -1,0 +1,12 @@
+# 빌드 결과물
+dist
+build
+
+# 거대한 라이브러리
+node_modules
+
+# 문서나 관련 없는 에셋
+assets
+
+# 락 파일
+pnpm-lock.yaml
