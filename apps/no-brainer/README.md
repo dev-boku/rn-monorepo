@@ -1,106 +1,73 @@
-# NoBrainer - 스마트 학습 카드 앱
+# Minimal Template
 
-AI 기반 스마트 카드 생성과 과학적 복습 시스템을 제공하는 학습 앱
+This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com).
 
-## 🚀 시작하기
+It was initialized using the following command:
 
-### 개발 환경 실행
 ```bash
-# 의존성 설치
-pnpm install
-
-# 개발 서버 시작
-pnpm start
-
-# iOS 실행
-pnpm ios
-
-# Android 실행
-pnpm android
+npx @react-native-reusables/cli@latest init -t no-brainer
 ```
 
-## 📱 주요 기능
+## Getting Started
 
-### Phase 0 (완료) ✅
-- Expo + TypeScript 프로젝트 초기화
-- Bottom Tab + Stack 네비게이션 구조
-- 블루/화이트 테마 시스템 (이미지 디자인 참고)
-- SQLite 데이터베이스 및 스키마 설계
-- Zustand 상태 관리 설정
+To run the development server:
 
-### Phase 1 MVP (진행 예정) 🚧
-- 게스트 모드 시작
-- 덱 CRUD 기능
-- 수동 카드 생성 (Basic, Basic reversed)
-- 학습 화면 (Hard/Good/Easy)
-- 1/4/7/14일 고정 간격 SRS 알고리즘
-- 로컬 알림 시스템
-- React Native Reanimated 카드 애니메이션
-
-## 🏗 프로젝트 구조
-
-```
-src/
-├── components/         # 재사용 가능한 UI 컴포넌트
-├── navigation/        # 네비게이션 구조
-│   ├── RootNavigator.tsx
-│   └── TabNavigator.tsx
-├── screens/          # 화면 컴포넌트
-│   ├── HomeScreen.tsx
-│   ├── DecksScreen.tsx
-│   ├── StudyScreen.tsx
-│   ├── StatsScreen.tsx
-│   └── SettingsScreen.tsx
-├── services/         # 비즈니스 로직
-│   └── database.ts   # SQLite 데이터베이스
-├── store/           # Zustand 상태 관리
-│   ├── deckStore.ts
-│   ├── cardStore.ts
-│   └── studyStore.ts
-├── theme/           # 디자인 시스템
-│   ├── colors.ts
-│   ├── typography.ts
-│   └── spacing.ts
-└── types/           # TypeScript 타입 정의
-    ├── navigation.ts
-    └── database.ts
+```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
 ```
 
-## 🎨 디자인 시스템
+This will start the Expo Dev Server. Open the app in:
 
-### 색상 팔레트
-- **Primary**: #5B6CF3 (메인 블루)
-- **Background**: #FFFFFF (화이트)
-- **Secondary**: #F3F4F6 (연한 회색)
+- **iOS**: press `i` to launch in the iOS simulator _(Mac only)_
+- **Android**: press `a` to launch in the Android emulator
+- **Web**: press `w` to run in a browser
 
-### 카드 난이도 색상
-- **Hard**: #EF4444 (빨강)
-- **Good**: #10B981 (초록)
-- **Easy**: #3B82F6 (파랑)
+You can also scan the QR code using the [Expo Go](https://expo.dev/go) app on your device. This project fully supports running in Expo Go for quick testing on physical devices.
 
-## 📊 데이터베이스 스키마
+## Adding components
 
-### 테이블 구조
-- `decks`: 덱 정보
-- `cards`: 카드 데이터
-- `review_logs`: 학습 기록
-- `study_sessions`: 세션 통계
+You can add more reusable components using the CLI:
 
-## 🛠 기술 스택
+```bash
+npx react-native-reusables/cli@latest add [...components]
+```
 
-- **Frontend**: React Native + Expo
-- **Navigation**: React Navigation v7
-- **State**: Zustand
-- **Database**: SQLite (expo-sqlite)
-- **Animation**: React Native Reanimated
-- **UI**: Custom theme system
-- **TypeScript**: Strict mode
+> e.g. `npx react-native-reusables/cli@latest add input textarea`
 
-## 📝 개발 로드맵
+If you don't specify any component names, you'll be prompted to select which components to add interactively. Use the `--all` flag to install all available components at once.
 
-자세한 로드맵은 [docs/no-brainer/roadmap-detail.md](../../docs/no-brainer/roadmap-detail.md) 참조
+## Project Features
 
-## 🤝 기여하기
+- ⚛️ Built with [Expo Router](https://expo.dev/router)
+- 🎨 Styled with [Tailwind CSS](https://tailwindcss.com/) via [Nativewind](https://www.nativewind.dev/)
+- 📦 UI powered by [React Native Reusables](https://github.com/founded-labs/react-native-reusables)
+- 🚀 New Architecture enabled
+- 🔥 Edge to Edge enabled
+- 📱 Runs on iOS, Android, and Web
 
-이 프로젝트는 모노레포 구조로 관리됩니다.
-기여 전 루트 디렉토리의 가이드라인을 확인해주세요.
+## Learn More
+
+To dive deeper into the technologies used:
+
+- [React Native Docs](https://reactnative.dev/docs/getting-started)
+- [Expo Docs](https://docs.expo.dev/)
+- [Nativewind Docs](https://www.nativewind.dev/)
+- [React Native Reusables](https://reactnativereusables.com)
+
+## Deploy with EAS
+
+The easiest way to deploy your app is with [Expo Application Services (EAS)](https://expo.dev/eas).
+
+- [EAS Build](https://docs.expo.dev/build/introduction/)
+- [EAS Updates](https://docs.expo.dev/eas-update/introduction/)
+- [EAS Submit](https://docs.expo.dev/submit/introduction/)
+
+---
+
+If you enjoy using React Native Reusables, please consider giving it a ⭐ on [GitHub](https://github.com/founded-labs/react-native-reusables). Your support means a lot!

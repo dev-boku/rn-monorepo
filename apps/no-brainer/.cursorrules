@@ -1,0 +1,322 @@
+# Cursor Rules for no-brainer Project
+
+## Project Overview
+React Native + Expo + NativeWind v4 + React Native Reusables starter template
+
+## Tech Stack
+- React Native 0.81.4
+- React 19.1.0
+- Expo 54.0.12
+- Expo Router 6.0.10 (file-based routing)
+- NativeWind v4 (Tailwind CSS for React Native)
+- React Native Reusables (shadcn/ui inspired)
+- TypeScript 5.9.2
+- New Architecture enabled
+
+## Code Style
+
+### TypeScript
+- Use absolute imports: `@/components/ui/button`
+- Define types for all props
+- Use `VariantProps<typeof xxxVariants>` for CVA components
+- Extend native props with `React.ComponentProps<typeof Pressable>`
+
+### NativeWind v4 Styling
+- Use `className` prop for all styling
+- Leverage CSS variables from `global.css`: `hsl(var(--primary))`
+- Platform-specific styles via `Platform.select()` inside CVA
+- Responsive prefixes: `sm:`, `md:`, `lg:`
+- Dark mode: `dark:` prefix
+
+```tsx
+// Good
+<View className="flex-1 items-center gap-4 p-4">
+  <Text className="text-foreground dark:text-foreground">Hello</Text>
+</View>
+
+// Bad - avoid inline styles
+<View style={{ flex: 1, alignItems: 'center' }}>
+```
+
+### Component Architecture
+- UI components in `components/ui/` (kebab-case)
+- Use CVA for variants: `buttonVariants({ variant, size })`
+- Export both component and variants: `export { Button, buttonVariants }`
+- Leverage TextClassContext for nested text styling
+
+```tsx
+// CVA Pattern
+const buttonVariants = cva(
+  'base-classes',
+  {
+    variants: {
+      variant: {
+        default: 'bg-primary',
+        ghost: 'active:bg-accent',
+      },
+      size: {
+        default: 'h-10 px-4',
+        sm: 'h-9 px-3',
+      },
+    },
+    defaultVariants: { variant: 'default', size: 'default' },
+  }
+);
+
+type ButtonProps = React.ComponentProps<typeof Pressable> &
+  VariantProps<typeof buttonVariants>;
+
+function Button({ variant, size, className, ...props }: ButtonProps) {
+  return (
+    <Pressable
+      className={cn(buttonVariants({ variant, size }), className)}
+      {...props}
+    />
+  );
+}
+```
+
+### File Naming
+- Components: `kebab-case.tsx` (e.g., `button.tsx`)
+- Screens: `kebab-case.tsx` in `app/` (e.g., `app/about.tsx`)
+- Tests: `[name].test.ts(x)` (same directory)
+- Utils: `kebab-case.ts` in `lib/`
+
+### Expo Router (File-based Routing)
+- Screens in `app/` directory
+- Layouts: `_layout.tsx`
+- Groups: `(group)/`
+- 404: `+not-found.tsx`
+- Dynamic: `[id].tsx`
+
+```tsx
+// Navigation
+import { Link, useRouter, Stack } from 'expo-router';
+
+<Link href="/about">About</Link>
+
+// Programmatic
+const router = useRouter();
+router.push('/about');
+
+// Screen options
+<Stack.Screen options={{ title: 'Home' }} />
+```
+
+## Design System
+
+### Colors (CSS Variables)
+Use semantic color names from `global.css`:
+- `--background`, `--foreground`
+- `--primary`, `--primary-foreground`
+- `--secondary`, `--secondary-foreground`
+- `--destructive`, `--destructive-foreground`
+- `--muted`, `--muted-foreground`
+- `--accent`, `--accent-foreground`
+- `--card`, `--popover`, `--border`, `--input`, `--ring`
+
+```tsx
+// Good - semantic colors
+className="bg-primary text-primary-foreground"
+
+// Avoid - direct colors
+className="bg-blue-500 text-white"
+```
+
+### Theme Support
+- Light/Dark modes via `useColorScheme()` from nativewind
+- Toggle: `toggleColorScheme()`
+- Conditional styles: `dark:` prefix
+
+```tsx
+import { useColorScheme } from 'nativewind';
+
+function ThemeToggle() {
+  const { colorScheme, toggleColorScheme } = useColorScheme();
+  return <Button onPress={toggleColorScheme}>Toggle</Button>;
+}
+```
+
+## Component Guidelines
+
+### Button Variants
+- `default`: Primary action
+- `destructive`: Delete, dangerous actions
+- `outline`: Secondary action with border
+- `secondary`: Alternative action
+- `ghost`: Minimal, hover-only background
+- `link`: Text link style
+
+### Sizes
+- `default`: Standard size (h-10)
+- `sm`: Small (h-9)
+- `lg`: Large (h-11)
+- `icon`: Square icon button (h-10 w-10)
+
+### Adding Components
+Use React Native Reusables CLI:
+```bash
+npx react-native-reusables/cli@latest add [component]
+```
+
+## Testing
+
+### Framework
+- Jest 29 + React Native Testing Library 13
+- Preset: jest-expo
+- React 19.1.0 + react-test-renderer 19.1.0
+
+### Test Focus
+- ✅ Utility functions (e.g., `cn` function)
+- ✅ CVA variants (e.g., `buttonVariants({ variant: 'default' })`)
+- ⚠️ Component rendering tests (React 19 compatibility issues)
+
+```tsx
+// Good - Utility test
+import { cn } from './utils';
+
+describe('cn', () => {
+  it('merges classes', () => {
+    expect(cn('px-2', 'py-4')).toContain('px-2');
+  });
+});
+
+// Good - Variant test
+import { buttonVariants } from './button';
+
+describe('Button Variants', () => {
+  it('generates correct classes', () => {
+    expect(buttonVariants({ variant: 'default' })).toContain('bg-primary');
+  });
+});
+```
+
+## Development Commands
+```bash
+pnpm dev          # Start Expo Dev Server
+pnpm ios          # iOS simulator
+pnpm android      # Android emulator
+pnpm web          # Web browser
+pnpm clean        # Clean cache
+
+pnpm test         # Run tests
+pnpm test:watch   # Watch mode
+pnpm test:coverage # Coverage report
+```
+
+## Common Patterns
+
+### Screen Structure
+```tsx
+import { Stack } from 'expo-router';
+import { View } from 'react-native';
+import { Text } from '@/components/ui/text';
+import { Button } from '@/components/ui/button';
+
+export default function Screen() {
+  return (
+    <>
+      <Stack.Screen options={{ title: 'Page Title' }} />
+      <View className="flex-1 items-center justify-center p-4">
+        <Text className="text-2xl font-bold">Hello World</Text>
+        <Button variant="default">
+          <Text>Click me</Text>
+        </Button>
+      </View>
+    </>
+  );
+}
+```
+
+### Layout Pattern
+```tsx
+import { ThemeProvider } from '@react-navigation/native';
+import { Stack } from 'expo-router';
+import { useColorScheme } from 'nativewind';
+
+export default function Layout() {
+  const { colorScheme } = useColorScheme();
+
+  return (
+    <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
+      <Stack />
+    </ThemeProvider>
+  );
+}
+```
+
+## Platform-Specific Code
+
+### Platform.select
+```tsx
+cn(
+  'base-classes',
+  Platform.select({
+    web: 'hover:bg-primary/90 focus-visible:ring-2',
+    ios: 'active:opacity-80',
+    android: 'active:opacity-80',
+  })
+)
+```
+
+### Platform Check
+```tsx
+import { Platform } from 'react-native';
+
+if (Platform.OS === 'web') {
+  // Web-specific code
+}
+```
+
+## Troubleshooting
+
+### NativeWind not working
+- Check `babel.config.js` has `nativewind/babel` preset
+- Restart dev server after `global.css` changes
+- Clear Metro cache: `pnpm dev -c`
+
+### Expo Router issues
+- Delete `.expo` folder and restart
+- Check `app.json` has `expo-router` plugin
+- Verify file naming (kebab-case)
+
+### New Architecture issues
+- Some old libraries may not be compatible
+- Check library compatibility before adding
+
+## Best Practices
+
+### DO
+- ✅ Use CSS variables for colors
+- ✅ Leverage CVA for component variants
+- ✅ Use absolute imports (`@/...`)
+- ✅ Support both light and dark modes
+- ✅ Use semantic color names
+- ✅ Test utility functions and variants
+- ✅ Platform-specific styles via Platform.select
+
+### DON'T
+- ❌ Use inline styles (use className)
+- ❌ Hard-code colors (use CSS variables)
+- ❌ Ignore dark mode support
+- ❌ Skip TypeScript types
+- ❌ Use relative imports for shared code
+- ❌ Modify global.css without understanding CSS variables
+- ❌ Test complex component rendering (React 19 issues)
+
+## Key Files
+
+- `app/_layout.tsx`: Root layout with theme
+- `components/ui/`: Reusable UI components
+- `lib/utils.ts`: cn utility function
+- `lib/theme.ts`: Theme configuration
+- `global.css`: CSS variables & Tailwind directives
+- `tailwind.config.js`: Tailwind configuration
+- `components.json`: shadcn/ui CLI config
+
+## Resources
+
+- React Native Reusables: https://reactnativereusables.com
+- NativeWind v4: https://www.nativewind.dev/
+- Expo Router: https://docs.expo.dev/router/
+- CVA: https://cva.style/docs

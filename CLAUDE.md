@@ -72,8 +72,10 @@ pnpm gen  # turbo gen workspace --copy
 ## 테스팅 가이드 (no-brainer 앱)
 
 ### 테스트 환경 설정
-- **테스트 프레임워크**: Jest + React Native Testing Library
-- **아키텍처**: FSD (Feature-Sliced Design)
+- **테스트 프레임워크**: Jest 29 + React Native Testing Library 13
+- **React 버전**: React 19.1.0 + react-test-renderer 19.1.0
+- **Babel 설정**: ESM → CommonJS 변환 (테스트 환경)
+- **아키텍처**: react-native-reusables + NativeWind v4
 - **테스트 위치**: 컴포넌트와 동일한 위치에 `*.test.tsx` 파일 배치
 
 ### 테스트 명령어
@@ -89,32 +91,52 @@ pnpm test:watch
 
 # 커버리지 리포트
 pnpm test:coverage
-
-# 스냅샷 업데이트
-pnpm test:update
 ```
 
-### FSD 테스트 구조
-```
-src/
-├── shared/ui/components/Button/
-│   ├── Button.tsx          # 컴포넌트
-│   ├── Button.test.tsx     # 테스트 (컴포넌트와 동일 위치)
-│   └── index.ts
-├── entities/todo/
-│   ├── model/todo.ts       # 모델
-│   ├── lib/useTodos.ts     # 비즈니스 로직
-│   └── lib/useTodos.test.ts # 테스트
-└── features/todo-list/
-    ├── ui/TodoList.tsx
-    └── ui/TodoList.test.tsx # 통합 테스트
+### 테스트 설정 파일
+- `jest.config.js` - Jest 설정 (jest-expo preset, transformIgnorePatterns, moduleNameMapper)
+- `jest.setup.js` - 테스트 전역 설정 (NativeWind, react-native 모듈 모킹)
+- `jest.rn-setup.js` - React Native 네이티브 브리지 모킹 (TurboModuleRegistry, DeviceInfo)
+- `babel.config.js` - 테스트 환경에서 ESM → CommonJS 변환
+
+### 테스트 작성 예시
+
+**유틸리티 함수 테스트 (Unit Test)**
+```typescript
+// src/lib/utils.test.ts
+import { cn } from './utils';
+
+describe('cn utility', () => {
+  it('should merge class names', () => {
+    const result = cn('px-2', 'py-4');
+    expect(result).toContain('px-2');
+  });
+});
 ```
 
-### 테스트 작성 팁
-- **컴포넌트 테스트**: rendering, interactions, styles
-- **Hook 테스트**: renderHook 사용
-- **통합 테스트**: 여러 레이어를 조합한 기능 테스트
-- **Mocking**: jest.setup.js에 공통 mock 설정 완료
+**컴포넌트 variant 테스트 (CVA)**
+```typescript
+// src/components/ui/button-simple.test.tsx
+import { buttonVariants } from './button';
+
+describe('Button Variants (Unit Test)', () => {
+  it('should generate correct classes for default variant', () => {
+    const classes = buttonVariants({ variant: 'default' });
+    expect(classes).toContain('bg-primary');
+  });
+});
+```
+
+### 주요 특징
+- ✅ Jest ESM 지원 활성화 (Babel을 통한 CommonJS 변환)
+- ✅ react-native 0.81.4 ESM import 오류 해결
+- ✅ NativeWind v4 모킹 설정
+- ✅ React Native 네이티브 모듈 모킹 (StyleSheet, Dimensions, Appearance)
+- ✅ react-test-renderer deprecation 경고 억제
+
+### 알려진 이슈
+- React 19 + react-test-renderer의 호환성 이슈로 인해 일부 컴포넌트 렌더링 테스트에서 "Can't access .root on unmounted test renderer" 에러 발생 가능
+- 권장사항: 유틸리티 함수 및 CVA variant 테스트 위주로 작성
 
 ## 중요한 파일들
 
