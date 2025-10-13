@@ -5,17 +5,17 @@
 
 ## 📊 전체 진행 상황
 
-| Phase | 상태 | 진행률 | 설명 |
-|-------|------|--------|------|
-| Phase 0 | ✅ 완료 | 100% | 기초 세팅 |
-| Phase 1 | 🚧 진행중 | 85% | MVP 핵심 기능 |
-| Phase 1.5 | ⏸️ 대기 | 0% | Quick Wins |
-| Phase 2 | ⏸️ 대기 | 0% | AI 입력 확장 |
-| Phase 3 | ⏸️ 대기 | 0% | 학습/알림 고도화 |
-| Phase 4 | ⏸️ 대기 | 0% | 계정/동기화/백업 |
-| Phase 5 | ⏸️ 대기 | 0% | Anki 호환 |
-| Phase 6 | ⏸️ 대기 | 0% | 공유/수익화 |
-| Phase 7 | ⏸️ 대기 | 0% | 고급 기능 |
+| Phase     | 상태      | 진행률 | 설명             |
+| --------- | --------- | ------ | ---------------- |
+| Phase 0   | ✅ 완료   | 100%   | 기초 세팅        |
+| Phase 1   | 🚧 진행중 | 0%     | MVP 핵심 기능    |
+| Phase 1.5 | ⏸️ 대기   | 0%     | Quick Wins       |
+| Phase 2   | ⏸️ 대기   | 0%     | AI 입력 확장     |
+| Phase 3   | ⏸️ 대기   | 0%     | 학습/알림 고도화 |
+| Phase 4   | ⏸️ 대기   | 0%     | 계정/동기화/백업 |
+| Phase 5   | ⏸️ 대기   | 0%     | Anki 호환        |
+| Phase 6   | ⏸️ 대기   | 0%     | 공유/수익화      |
+| Phase 7   | ⏸️ 대기   | 0%     | 고급 기능        |
 
 ---
 
@@ -26,13 +26,13 @@
 ### 완료된 작업 ✅
 
 - [x] **프로젝트 초기화**
-  - [x] Expo 54 + React Native 0.81.4 + TypeScript 5.9
-  - [x] ESLint/Prettier 설정
-  - [x] NativeWind v4 스타일링 시스템
-  - [x] React Native Reusables UI 라이브러리
+  - [x] Expo 54 + React Native 0.76.6 + TypeScript 5.9
+  - [x] ESLint/Prettier 설정 (@repo/eslint-config 사용)
+  - [x] 통합 테스트 환경 설정 (jest-expo, jest, @types/jest, @testing-library/react-native)
+  - [x] Claude Code, Cursor 설정
 
 - [x] **네비게이션**
-  - [x] Expo Router 6.0 file-based routing
+  - [x] Expo Router 4.0 file-based routing
   - [x] Stack Navigator 기본 구조
   - [x] 홈 화면 (`app/index.tsx`)
   - [x] 덱 상세 화면 (`app/deck/[id].tsx`)
@@ -60,8 +60,10 @@
   - [x] Review Store (`src/store/review-store.ts`)
 
 - [x] **테스트 환경**
-  - [x] Jest 29 + React Native Testing Library 13 설정
-  - [x] 유틸리티 함수 테스트 (`src/lib/utils.test.ts`)
+  - [x] Jest 29 + jest-expo 52 설정
+  - [x] 유틸리티 함수 테스트 (`src/lib/__tests__/`)
+  - [x] SRS 알고리즘 테스트 (`src/lib/srs.test.ts`)
+  - [x] ID 생성 테스트 (`src/lib/id.test.ts`)
 
 **완료 기준**: ✅ 모든 항목 완료
 
@@ -74,33 +76,33 @@
 ### 완료된 작업 ✅
 
 1. **덱 관리** ✅
-   - [x] 덱 생성/편집/삭제
-   - [x] 카드 수 표시
-   - [x] 덱 목록 화면 (FlatList)
-   - [x] 오늘 복습할 카드 수 배지
+   - [ ] 덱 생성/편집/삭제
+   - [ ] 카드 수 표시
+   - [ ] 덱 목록 화면 (FlatList)
+   - [ ] 오늘 복습할 카드 수 배지
 
 2. **카드 생성** ✅
-   - [x] Basic 타입 카드 (앞면/뒷면)
-   - [x] 카드 저장 기능
-   - [x] 카드 생성 화면 UI
+   - [ ] Basic 타입 카드 (앞면/뒷면)
+   - [ ] 카드 저장 기능
+   - [ ] 카드 생성 화면 UI
 
 3. **학습 플로우** ✅
-   - [x] 카드 앞면 → 뒷면 공개
-   - [x] 평가 버튼 (Hard/Good/Easy)
-   - [x] 학습 세션 관리
-   - [x] 남은 카드 수 표시
-   - [x] 세션 완료 통계 표시
+   - [ ] 카드 앞면 → 뒷면 공개
+   - [ ] 평가 버튼 (Hard/Good/Easy)
+   - [ ] 학습 세션 관리
+   - [ ] 남은 카드 수 표시
+   - [ ] 세션 완료 통계 표시
 
 4. **SRS 알고리즘** ✅
-   - [x] 1/4/7/14일 고정 간격 구현 (`src/lib/srs.ts`)
-   - [x] Hard: +1일 재설정 (stepIndex = 0)
-   - [x] Good: 다음 스텝 (1→4→7→14)
-   - [x] Easy: 스텝 점프 (1→7, 4→14, 7→14)
-   - [x] Review State 관리
+   - [ ] 1/4/7/14일 고정 간격 구현 (`src/lib/srs.ts`)
+   - [ ] Hard: +1일 재설정 (stepIndex = 0)
+   - [ ] Good: 다음 스텝 (1→4→7→14)
+   - [ ] Easy: 스텝 점프 (1→7, 4→14, 7→14)
+   - [ ] Review State 관리
 
 5. **오프라인 퍼스트** ✅
-   - [x] 모든 데이터 로컬 저장 (SQLite)
-   - [x] 앱 재시작 후 데이터 복원
+   - [ ] 모든 데이터 로컬 저장 (SQLite)
+   - [ ] 앱 재시작 후 데이터 복원
 
 ### 미완료 작업 ❌
 
@@ -117,7 +119,7 @@
    - [ ] 덱별 진행률
 
 8. **카드 고급 기능** ⚠️ (부분 완료)
-   - [x] 카드 생성
+   - [ ] 카드 생성
    - [ ] 카드 편집
    - [ ] 카드 삭제
    - [ ] 카드 검색
@@ -135,6 +137,7 @@
 - [ ] 리뷰 세션 중단 시 진행 상태 저장
 
 **완료 기준**:
+
 - ✅ 전체 학습 사이클 동작 (생성→학습→복습) ✅
 - ⏳ 알림 정상 발송 (미완료)
 - ✅ 크래시율 < 0.1%
@@ -204,6 +207,7 @@
    - [ ] 미리보기 UI
 
 **기술 스택**:
+
 - ML Kit (온디바이스)
 - Google Cloud Vision API
 - OpenAI API / Claude API
