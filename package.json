@@ -4,7 +4,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "turbo": "turbo run",
-    "gen": "turbo gen workspace --copy"
+    "gen": "turbo gen workspace --copy",
+    "clean": "watchman watch-del '/Users/boku/Desktop/workspace/rn-monorepo'; watchman watch-project '/Users/boku/Desktop/workspace/rn-monorepo'"
   },
   "license": "ISC",
   "engines": {
